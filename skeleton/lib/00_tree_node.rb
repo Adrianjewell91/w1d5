@@ -21,20 +21,14 @@ class PolyTreeNode
   end
 
   def add_child(child)
-    if child.is_a?(PolyTreeNode)
-       @children << child
-    end
+    @children << child
   end
 
   def parent=(node)
-    if node.is_a?(PolyTreeNode)      
-      @parent = node #node.is_a?(PolyTreeNode) ? node : nil
-      node.add_child(self)
-    else
-      puts "Please use a node."
-    end
+    @parent = node.is_a?(PolyTreeNode) ? node : raise
+    node.add_child(self)
   end
-
+  
 end
 
 ## Test
@@ -44,12 +38,12 @@ if __FILE__ == $PROGRAM_NAME
 
   ####
   s2 = PolyTreeNode.new(5)
-  s.parent = s2
+  s1.parent = s2
 
   p s1
   p s2
 
-  # s.parent = "dad" #should raise error
-  # p s.parent #should not happens
+  s1.parent = "dad" #should raise error
+  p s1.parent #should not happens
 
 end
