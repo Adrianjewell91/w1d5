@@ -9,11 +9,11 @@ class PolyTreeNode
   end
 
   def parent
-    @parent.dup
+    @parent
   end
 
   def children
-    @children.dup
+    @children
   end
 
   def value
@@ -21,14 +21,25 @@ class PolyTreeNode
   end
 
   def add_child(child)
-    @children << child
+    @children << child unless @children.include?(child)
+  end
+
+  def remove_child(child)
+    @children.delete(child) #if @children.include?(child)
   end
 
   def parent=(node)
-    @parent = node.is_a?(PolyTreeNode) ? node : raise
-    node.add_child(self)
+    # @parent = node.is_a?(PolyTreeNode) ? node : raise
+    if node.is_a?(PolyTreeNode)
+      @parent.remove_child(self) if @parent 
+      @parent = node
+      node.add_child(self)
+    elsif !node
+      @parent.remove_child(self)
+      @parent = nil
+    end
   end
-  
+
 end
 
 ## Test
